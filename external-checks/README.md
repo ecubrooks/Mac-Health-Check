@@ -1,5 +1,4 @@
-# Mac Health Check
-
+# Mac Health Check (3.2.0)
 ## External Checks
 
 This directory contains scripts that perform external checks for the services of various third-party applications. 
@@ -17,10 +16,10 @@ External checks leverage code you’ve already written, simply added to a new, s
 This custom Trigger and the path to the app itself — so that its icon can be displayed to the end-user — is then specified in Mac Health Check:
 
 ```
-checkExternal "12" "symvBeyondTrustPMfM" "/Applications/PrivilegeManagement.app"
-checkExternal "13" "symvCiscoUmbrella" "/Applications/Cisco/Cisco Secure Client.app"
-checkExternal "14" "symvCrowdStrikeFalcon" "/Applications/Falcon.app"
-checkExternal "15" "symvGlobalProtect" "/Applications/GlobalProtect.app"
+checkExternalJamfPro "12" "symvBeyondTrustPMfM" "/Applications/PrivilegeManagement.app"
+checkExternalJamfPro "13" "symvCiscoUmbrella" "/Applications/Cisco/Cisco Secure Client.app"
+checkExternalJamfPro "14" "symvCrowdStrikeFalcon" "/Applications/Falcon.app"
+checkExternalJamfPro "15" "symvGlobalProtect" "/Applications/GlobalProtect.app"
 ```
 
 When the policy successfully executes, the returned output must include the keyword `Running`, meaning the service which you’re checking is running.

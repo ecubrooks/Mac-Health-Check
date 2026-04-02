@@ -2,15 +2,63 @@
 
 ## CHANGELOG
 
+<<<<<<< HEAD
+=======
+### 3.2.0 (02-Apr-2026)
+- Preserved user-provided local `organizationOverlayiconURL` files by downloading remote overlay icons to a per-run temporary file and only cleaning up that script-managed asset at exit (Thanks for the heads-up, @brian_b!)
+- Corrected Jamf Pro inventory warning text for non-SSO sessions so omitted `-endUsername` logging now explains that no SSO username was available for the logged-in user.
+- Synced DDM OS enforcement detection in `checkAvailableSoftwareUpdates()` with newer [DDM OS Reminder](https://github.com/dan-snelson/DDM-OS-Reminder) corrections: prefer the newest trustworthy declaration timestamp, recognize currently applicable declarations, and use future padded enforcement deadlines when valid.
+- Updated Jamf Pro Cloud & On-prem Endpoints ([Pull Request #83](https://github.com/dan-snelson/Mac-Health-Check/pull/83); thanks for yet another one, @HowardGMac!)
+- Fix: SSO checks report 'not configured' instead of 'NOT logged in' when SSO type is absent ([Pull Request #82](https://github.com/dan-snelson/Mac-Health-Check/pull/82); thanks for yet another one, @bigdoodr!)
+- Added `displayFailureNotification` function to present a `--notification --style pseudo-alert` (swiftDialog 3.1.0) summary of failed health checks when failures are detected
+- Hardened Jamf Pro inventory submission to only send `-endUsername` when a valid SSO username is available, preventing `"NOT logged in"` placeholder values from being submitted in non-PSSO environments, and added explicit inventory notices that log whether `-endUsername` was used plus its source (Kerberos SSOe, Platform SSOe, or None) and resolved value (`<empty>` when not used). [Issue #81](https://github.com/dan-snelson/Mac-Health-Check/issues/81); sorry for any Dan-induced headaches, [@tonyyo11](https://github.com/tonyyo11)!
+- Refactored `checkOS()` to better handle beta versions vs. Background Security Improvement versions
+- Updated `checkFreeDiskSpace()` to prefer Finder-aligned available capacity via `NSURLVolumeAvailableCapacityForImportantUsageKey`, improving visibility of purgeable space such as local Time Machine snapshots and iCloud-managed capacity (thanks for the cross-project [Pull Request](https://github.com/dan-snelson/DDM-OS-Reminder/pull/80), @huexley!)
+    - Added sanity checks and automatic fallback to `diskutil info /` when the JXA/Foundation query returns invalid data, preserving safe behavior on affected systems
+    - Retained `allowedMinimumFreeDiskPercentage` as the threshold while updating the human-readable free-space display to use decimal `GB` formatting when the Finder-aligned result is valid
+- Refactored code to more reliably display `$humanReadableScriptName` in the Dock
+- Added Volume Owners to `$helpmessage`
+
+### 3.0.0 (23-Feb-2026)
+**First (attempt at a) MDM-agnostic release**
+- Added a new `Development` Operation Mode to aid in developing / testing individual Health Checks. (See: [README.md](README.md) for details.)
+- Minor update to host check curl logic (Pull Request #60; thanks, @ecubrooks!)
+- Refactored "Palo Alto Networks GlobalProtect VPN Information" (in an _attempt_ to address Issue #61; thanks, @RussCollis)
+- Refactored "checkElectronCornerMask" to display the list o' apps as the "listitem" "subtitle" (and removed dedicated "Electron Corner Mask" reporting)
+- Refactored many other functions, adding instructive "listitem" "subtitle" self-remediation instructions
+- Refactored AirPlay Receiver logic (Pull Request #66; thanks for another one, @bigdoodr!)
+- Update System Memory and System Storage sidebar calculations (Pull Request #68 to address Issue #69; thanks, @HowardGMac and @mallej!)
+- Added `mdmProfileIdentifier` to `checkMdmProfile` function (Pull Request #70; thanks for yet another one, @bigdoodr!)
+- Added detection for staged macOS updates (from [DDM-OS-Reminder](https://github.com/dan-snelson/DDM-OS-Reminder))
+- Updated check for App Auto-Patch to support version 3.5.0
+- Force locale to English for date command (Pull Request #72; thanks, @aedekuiper!)
+- Added "-endUsername" to the Jamf Pro-specific `updateComputerInventory` function
+- Updated comment to reference MDM's Self Service portal (Pull Request #75; thanks, @nikeshashar!)
+- Added retry logic with file existence verification for `dialogJSONFile` and `dialogCommandFile` to address race condition errors (Issue #73; thanks for the heads-up, @sabanessts!)
+- Refactored IT Support help message construction to support dynamic `supportLabelN` / `supportValueN` pairs (`N=1..6`), skipping empty entries (Feature Request #76; thanks for the suggestion, @sabanessts!)
+- Hardened `checkTouchID` hardware detection and enrollment parsing for built-in and external Touch ID devices (thanks to the Mac Admins Slack thread contributors!)
+- Added dock-enabled swiftDialog launch in non-`Silent` modes with configurable `dockIcon` and copied `${humanReadableScriptName}.app` launch support for Dock hover text
+- Added dynamic `dockiconbadge` countdown support to show remaining checks, decrement after each completed check, and remove the badge at completion / quit
+- Added Rosetta-required app reporting to `quitScript` summary output using `mdfind` architecture comparison
+
+> :warning: **Breaking Change** :warning:
+> 
+> The `checkExternal` function has been renamed to `checkExternalJamfPro` in version `3.0.0` to reflect its Jamf Pro-specific functionality. Please update any existing code that uses this function accordingly.
+
+>>>>>>> 6c81f0c951d50cb76b24cc87fbdc53fa30832c55
 ### 2.6.0 (06-Nov-2025)
 - Added check for "Electron Corner Mask" https://github.com/electron/electron/pull/48376
 - Added check for Touch ID (Pull Request #54; thanks, @alexfinn!)
 - Added "Electron Corner Mask" list o' apps to Webhook message
 - Addressed Bug: Software Update check shows wrong installed version (Issue #55; thanks for the heads-up, @coalis!)
 
+<<<<<<< HEAD
 ---
 
 ### 2.5.0 (20-Oct-2025)
+=======
+### 2.5.0 (15-Oct-2025)
+>>>>>>> 6c81f0c951d50cb76b24cc87fbdc53fa30832c55
 - Added "System Memory" and "System Storage" capacity information (Pull Request #36; thanks again, @HowardGMac!)
 - Corrected misspelling of "Certificate" in multiple locations (Pull Request #41; thanks, @HowardGMac!)
 - Improved handling of the `checkJamfProCheckIn` and `checkJamfProInventory` functions when no relevant data is found in the `jamf.log` file
@@ -62,10 +110,8 @@
 - Updated SSID code (thanks, ZP!)
 - Added troubleshooting code for common JSON issues
 - Additional troubleshooting tweaks
-- Updates to leverage new features of swiftDialog 3.0.0
+- Updates to leverage new features of [swiftDialog 3.0.0](https://github.com/swiftDialog/swiftDialog/releases/tag/v3.0.0Preview2)
 - Updated `listitem` icon colour to reflect status
-- Updated `checkOS` function
-- Visually enchanced `listitem` error and failure statuses
 - Added Organization's Color Schemes based on light or dark mode (Pull Request #37; thanks, @AndrewMBarnett!)
 
 ---

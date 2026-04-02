@@ -1,28 +1,28 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/dan-snelson/Mac-Health-Check?display_name=tag) ![GitHub pre-release (latest by date)](https://img.shields.io/github/v/release/dan-snelson/Mac-Health-Check?display_name=tag&include_prereleases) ![GitHub issues](https://img.shields.io/github/issues-raw/dan-snelson/Mac-Health-Check) ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/dan-snelson/Mac-Health-Check) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/dan-snelson/Mac-Health-Check) ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/dan-snelson/Mac-Health-Check)
 
-# Mac Health Check
+# Mac Health Check (3.2.0)
 
-> A significant update to the practical and user-friendly approach to surfacing Mac health information directly to end-users via Jamf Pro Self Service
+> Another pleasant update to the practical, MDM-agnostic, user-friendly approach to surfacing Mac compliance information directly to end-users via your MDM's self-service app
 
-<img src="images/Mac_Health_Check_Hero.jpg" alt="Mac Health Check Hero" width="800"/>
+<img src="images/MHC_3.2.0_Poster.png" alt="Mac Health Check Hero" width="800"/>
 
 ## Overview
 
-Mac Health Check provides a practical and user-friendly approach to surfacing Mac compliance information directly to end-users via Jamf Pro Self Service.
+Mac Health Check provides a practical, MDM-agnostic, user-friendly approach to surfacing Mac compliance information directly to end-users via an MDM's Self Service.
 
 Built using the open-source utility [swiftDialog](https://github.com/swiftDialog/swiftDialog/wiki), the solution acts as a “heads-up display” that presents real-time system health and policy compliance status in a clear and interactive format.
 
-Deployment of Mac Health Check involves configuring organizational defaults, embedding the script in Jamf Pro, creating a policy to run it on demand and testing to ensure proper output and behavior.
+Deployment of Mac Health Check involves configuring organizational defaults, embedding the script in your MDM, creating a policy to run it on demand and testing to ensure proper output and behavior.
 
 Administrators can customize the user interface using swiftDialog’s visual capabilities, making the experience both informative and approachable.
 
 The tool logs results for review, while not altering device configuration, and a new "Silent" Operation Mode makes Mac Health Check ideal for IT visibility without end-user intrusion.
 
-<a href="https://arizona.zoom.us/rec/play/eXXmgFbxmyn1n_y81p0qdFwirdYOXua2AyNqcKoLzt0-u8gHgF0FObggPUBN3iIz1cpMZYcvHThlM4Y.WQEsj2NTeNB-ySdj" target="_blank"><img src="images/Mac_Health_Check Presentation.png" alt="Four Corners & Silver State September 2025 Meetup" width="600"/><br />Four Corners & Silver State September 2025 Meetup</a> (25-Sep-2025)
+<a href="https://www.youtube.com/watch?v=rDPoYlSSEtQ&t=36s" target="_blank"><img src="images/Mac_Health_Check Presentation.png" alt="Rocketman Tech December 2025 Meetup" width="600"/><br />Rocketman Tech December 2025 Meetup</a> (05-Dec-2025)
 
 ## Use Cases
 
-Mac Health Check is particularly valuable in IT support workflows, serving as an initial triage point for Tier 1 support by confirming network access, credentials, and Jamf Pro connectivity, while also acting as a verification tool for Tier 2 teams both during and after remediation efforts.
+Mac Health Check is particularly valuable in IT support workflows, serving as an initial triage point for Tier 1 support by confirming network access, credentials, and MDM connectivity, while also acting as a verification tool for Tier 2 teams both during and after remediation efforts.
 
 ### Step Zero for Tier 1
 
@@ -44,24 +44,56 @@ Mac Health Check is particularly valuable in IT support workflows, serving as an
 - Ideal for background compliance reporting
 - Complements existing MDM compliance frameworks
 
+### Dock Integration
+
+- Non-`Silent` modes launch swiftDialog with `--showdockicon` and `--dockicon`
+- `dockIcon` is configurable and supports `default`, local paths, `file://` paths and `http(s)` URLs
+- Mac Health Check copies `Dialog.app` to `/Library/Application Support/Dialog/${humanReadableScriptName}.app` and launches `dialogcli` from that bundle so Dock hover text matches the script name
+- `dockiconbadge` shows the number of remaining checks, decreases after each completed check and is removed when checks complete
+- If dock icon setup fails, Mac Health Check logs a warning and falls back to the default `/usr/local/bin/dialog` launch path
+
 ## Features
-The following health checks and information reporting are included and the script operates in “test” mode by default. (Change `operationMode` to `production` when ready to deploy in production.)
+The following health checks and information reporting are included in version `3.2.0`, which operates in `Self Service` mode by default. (Change `operationMode` to `Debug`, `Development` or `Test` when getting ready to deploy in production.)
+
+> :new: Mac Health Check version `3.2.0` introduces a new persistent notification of failed health checks, which remains visible until user-dismissed
+ 
+<img src="images/MHC_3.2.0_failure_notification.png" alt="Health Checks" width="400"/>
 
 ### Health Checks
 
+<<<<<<< HEAD
 <img src="images/MHC_2.6.0_SSV.png" alt="Health Checks" width="800"/>
 
 1. macOS Version
 1. Available Updates (including deferred and DDM-enforced updates)
+=======
+<img src="images/MHC_3.2.0.png" alt="Health Checks" width="800"/>
+
+:tada: Improved in version `3.2.0`
+
+1. macOS Version
+1. :tada: Available Updates (including deferred and DDM-enforced updates)
+>>>>>>> 6c81f0c951d50cb76b24cc87fbdc53fa30832c55
 1. System Integrity Protection
 1. Signed System Volume (SSV)
 1. Firewall
 1. FileVault Encryption
 1. Gatekeeper / XProtect
+<<<<<<< HEAD
 1. Touch ID :new:
 1. VPN Client
 1. Last Reboot
 1. Free Disk Space
+=======
+1. Touch ID
+1. Password Hint
+1. AirDrop
+1. AirPlay Receiver
+1. Bluetooth Sharing
+1. VPN Client
+1. Last Reboot
+1. :tada: Free Disk Space
+>>>>>>> 6c81f0c951d50cb76b24cc87fbdc53fa30832c55
 1. User's Directory Size and Item Count
     - Desktop
     - Downloads
@@ -77,32 +109,48 @@ The following health checks and information reporting are included and the scrip
     - Apple Software and Carrier Updates
     - Apple Certificate Validation
     - Apple Identity and Content Services
+<<<<<<< HEAD
     - Jamf Hosts
 1. Electron Corner Mask :new: [:link:](https://github.com/electron/electron/pull/48376)
+=======
+    - :tada: Jamf Hosts
+1. App Auto-Patch
+1. Electron Corner Mask [🔗](https://avarayr.github.io/shamelectron/)
+>>>>>>> 6c81f0c951d50cb76b24cc87fbdc53fa30832c55
 1. Organizationally required Applications (i.e., Microsoft Teams)
 1. BeyondTrust Privilege Management*
 1. Cisco Umbrella*
 1. CrowdStrike Falcon*
 1. Palo Alto GlobalProtect*
 1. Network Quality Test
-1. Update Computer Inventory
+1. :tada: Update Computer Inventory**
 
 *Requires [external check](/external-checks/README.md)
+**Requires Jamf Pro
 
 ### Information Reporting
 
+<<<<<<< HEAD
 <img src="images/MHC_2.6.0_Helpmessage.png" alt="Help Message" width="800"/>
+=======
+<img src="images/MHC_3.2.0_Helpmessage.png" alt="In progress" width="800"/>
+>>>>>>> 6c81f0c951d50cb76b24cc87fbdc53fa30832c55
 
 #### IT Support
-- Telephone
-- Email
-- Website
-- Knowledge Base Article
+- Dynamic `supportLabel1` / `supportValue1` through `supportLabel6` / `supportValue6`
+- Empty Label / Value pairs are skipped automatically
+- Legacy fallback still works when all dynamic pairs are empty:
+  - Telephone (`supportTeamPhone`)
+  - Email (`supportTeamEmail`)
+  - Website (`supportTeamWebsite`)
+  - Knowledge Base Article (`supportKBURL`)
+- Info button target now uses the first URL-like dynamic support value; if none is found, it falls back to legacy Knowledge Base values
 
 #### User Information
 - Full Name
 - User Name
 - User ID
+- Volume Owners
 - Secure Token
 - Location Services
 - Microsoft OneDrive Sync Date
@@ -121,15 +169,18 @@ The following health checks and information reporting are included and the scrip
 - VPN IP Address
 
 #### Jamf Pro Information**
-- Jamf Pro Computer ID
 - Site
 
-**[Payload Variables for Configuration Profiles](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-11.18.0/page/Computer_Configuration_Profiles.html#ariaid-title2)
+***[Payload Variables for Configuration Profiles](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-11.18.0/page/Computer_Configuration_Profiles.html#ariaid-title2)
 
 ### Policy Log Reporting
 
 ```
+<<<<<<< HEAD
 MHC (2.6.0): 2025-11-06 03:43:13 - [NOTICE] WARNING: 'localadmin' IS A MEMBER OF 'admin';
+=======
+MHC (3.2.0): 2026-03-28 03:43:13 - [NOTICE] WARNING: 'localadmin' IS A MEMBER OF 'admin';
+>>>>>>> 6c81f0c951d50cb76b24cc87fbdc53fa30832c55
 User: macOS Server Administrator (localadmin) [503] staff everyone localaccounts _appserverusr 
 admin _appserveradm com.apple.sharepoint.group.4 com.apple.sharepoint.group.3
 com.apple.sharepoint.group.1 _appstore _lpadmin _lpoperator _developer _analyticsusers
@@ -147,6 +198,9 @@ Network Time Server: time.apple.com; Jamf Pro Computer ID: 007; Site: Servers
 1. Warning when logged-in user is a member of `admin`
 1. Deferred Software Updates
 1. Logged-In User Group Membership
+1. Security Mode
+1. DEP-allowed MDM Control
+1. Activation Lock
 1. Bootstrap Token
 1. sudoers
 1. Kerberos SSOe
@@ -166,6 +220,76 @@ Community-supplied, best-effort support is available on the [Mac Admins Slack](
 ## Deployment
 
 <a href="https://snelson.us/mhc" target="_blank"><img src="images/Deployment.png" alt="Deployment" width="600"/></a><br />
-Deployment of Mac Health Check involves configuring organizational defaults, embedding the script in Jamf Pro, creating a policy to run it on demand and testing to ensure proper output and behavior.
+Deployment of Mac Health Check involves configuring organizational defaults, uploading the script to your MDM server, creating a policy to run it on demand and testing to ensure proper output and behavior.
 
 <a href="https://snelson.us/mhc" target="_blank">Continue reading …</a>
+
+## Operation Mode: Development
+
+A new "Development" Operation Mode has been added to aid in developing Health Checks, allowing the easy execution of a _single_ Health Check.
+
+<img src="images/MHC_3.0.0_Development_1.png" alt="Health Checks" width="800"/>
+<img src="images/MHC_3.0.0_Development_2.png" alt="Health Checks" width="800"/>
+
+When `operationMode` is set to `Development`, a dedicated `developmentListitemJSON` is used to allow developers to focus on specific checks, instead of running the entire suite.
+
+```zsh
+####################################################################################################
+#
+# Program
+#
+####################################################################################################
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Generate dialogJSONFile based on Operation Mode and MDM Vendor
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+if [[ "${operationMode}" == "Development" ]]; then
+    
+    notice "Operation Mode is ${operationMode}; using ${operationMode} dialogJSONFile template."
+
+    # Development List Items
+
+    developmentListitemJSON='
+    [
+        {"title" : "AirDrop", "subtitle" : "Ensure AirDrop is not set to Everyone for security", "icon" : "SF=17.circle,'"${organizationColorScheme}"'", "status" : "pending", "statustext" : "Pending …", "iconalpha" : 0.5},
+        {"title" : "Jamf Hosts","subtitle":"Test connectivity to Jamf Pro cloud and on-prem endpoints","icon":"SF=28.circle,'"${organizationColorScheme}"'", "status":"pending","statustext":"Pending …", "iconalpha" : 0.5},
+        {"title" : "Free Disk Space", "subtitle" : "Checks for the amount of free disk space on your Mac’s boot volume", "icon" : "SF=12.circle,'"${organizationColorScheme}"'", "status" : "pending", "statustext" : "Pending …", "iconalpha" : 0.5},
+        {"title" : "Desktop Size and Item Count", "subtitle" : "Checks the size and item count of the Desktop", "icon" : "SF=13.circle,'"${organizationColorScheme}"'", "status" : "pending", "statustext" : "Pending …", "iconalpha" : 0.5},
+        {"title" : "Downloads Size and Item Count", "subtitle" : "Checks the size and item count of the Downloads folder", "icon" : "SF=14.circle,'"${organizationColorScheme}"'", "status" : "pending", "statustext" : "Pending …", "iconalpha" : 0.5},
+        {"title" : "Trash Size and Item Count", "subtitle" : "Checks the size and item count of the Trash", "icon" : "SF=15.circle,'"${organizationColorScheme}"'", "status" : "pending", "statustext" : "Pending …", "iconalpha" : 0.5}
+    ]
+    '
+    # Validate developmentListitemJSON is valid JSON
+    if ! echo "$developmentListitemJSON" | jq . >/dev/null 2>&1; then
+        echo "Error: developmentListitemJSON is invalid JSON"
+        echo "$developmentListitemJSON"
+        exit 1
+    else
+        combinedJSON=$( jq -n --argjson dialog "$mainDialogJSON" --argjson listitems "$developmentListitemJSON" '$dialog + { "listitem": $listitems }' )
+    fi
+
+else
+```
+
+Additionally, the matching Health Check functions are executed:
+
+```zsh
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Generate Health Checks based on Operation Mode and MDM Vendor (where "n" represents the listitem order)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+if [[ "${operationMode}" == "Development" ]]; then
+    
+    # Operation Mode: Development
+    notice "Operation Mode is ${operationMode}; using ${operationMode}-specific Health Check."
+    dialogUpdate "title: ${humanReadableScriptName} (${scriptVersion})<br>Operation Mode: ${operationMode}"
+    checkAirDropSettings "0"
+    checkNetworkHosts "1" "Jamf Hosts" "${jamfHosts[@]}"
+    checkFreeDiskSpace "2"
+    checkUserDirectorySizeItems "3" "Desktop" "desktopcomputer.and.macbook" "Desktop"
+    checkUserDirectorySizeItems "4" "Downloads" "arrow.down.circle.fill" "Downloads"
+    checkUserDirectorySizeItems "5" ".Trash" "trash.fill" "Trash"
+
+else
+```
